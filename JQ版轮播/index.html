@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>无聊写轮播玩</title>
+<style>
+*{ margin:0; padding:0; list-style:none;}
+/*#divSmallBox{overflow:hidden;*display:inline;*zoom:1;width:10px;height:10px;margin:0 5px;border-radius:10px;background:#ffffff;}*/
+#playBox{ width:1000px; height:409px; margin:20px auto; background:#333; position:relative; overflow:hidden;}
+#playBox .oUlplay { width:99999px; position:absolute; left:0; top:0;}
+#playBox .oUlplay li{ float:left;}
+#playBox .pre{ cursor:pointer; width:45px; height:45px; background:url(./images/l.png) no-repeat; position:absolute; top:190px; left:10px; z-index:10;}
+#playBox .next{ cursor:pointer; width:45px; height:45px; background:url(./images/r.png) no-repeat; position:absolute; top:190px; right:10px; z-index:10;}
+#playBox .smalltitle {width:1000px; height:10px; position:absolute; bottom:15px; z-index:10}
+#playBox .smalltitle ul{ width:120px; margin:0 auto;}
+#playBox .smalltitle ul li{ width:10px; height:10px; margin:0 5px; border-radius:10px; background:#ffffff; float:left; overflow:hidden;*display:inline;*zoom:1;}
+#playBox .smalltitle .active{ background:#69aaec;}
+.titleTip{
+	position:absolute;
+	top:0px;
+	left:0px;
+	width:100%;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	background:rgba(0,0,0,0.5);
+	color:#F00;
+}
+</style>
+
+</head>
+<body>
+<!-- 代码 开始 -->
+  <div id="playBox">
+    <div class="pre"></div>
+    <div class="next"></div>
+    <div class="smalltitle">
+      <ul>
+        <li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <ul class="oUlplay">
+       <li><a href="javascript:;"><img src="images/1.jpg"</a></li>
+       <li><a href="javascript:;"><img src="images/2.jpg"</a></li>
+       <li><a href="javascript:;"><img src="images/3.jpg"</a></li>
+       <li><a href="javascript:;"><img src="images/4.jpg"</a></li>
+       <li><a href="javascript:;"><img src="images/5.jpg"</a></li>
+       <li><a href="javascript:;"><img src="images/6.jpg"</a></li>
+    </ul>
+    <div class="titleTip">
+        <p>图片1</p>
+    </div>
+  </div>
+<!-- 代码 结束 -->
+<script src="js/jquery-2.2.3.min.js"></script>
+<script>
+$(function(){
+	  var listArr = ["图片1","图片2","图片3","图片4","图片5","图片6"];
+	  var oDiv = $("#playBox");
+	  var oPre = $(".pre");
+	  var oNext = $(".next");
+	  var oUlBig = $(".oUlplay");
+	  var aBigLi = $(".oUlplay").children("li");
+	  var oDivSmall = $(".smalltitle");
+	  var aLiSmall = $(".smalltitle").find("li");
+	  var imgWidth = oUlBig.find('img').eq(0).width();
+	  var now = 0;
+	  var timer = null;
+	  autoPlay(); 
+	  aLiSmall.on('click',function(){
+		  now = $(this).index();
+		  tab(now);
+	  });
+	  oPre.on('click',function(){
+		  now--;
+		  if(now == -1){
+			  now = aBigLi.length-1;
+		  }
+		  tab(now);
+	  });
+	  oNext.on('click',function(){
+		  now++
+		  if(now == aBigLi.length)
+		  {
+			  now = 0;
+		  }
+		  tab(now);
+	   });
+	   //自动播放
+	   oDiv.hover(function() {
+			clearInterval(timer);
+	   },autoPlay);
+	   
+	   function tab(now){
+		  aLiSmall.eq(now).addClass("active").siblings().removeClass("active");
+		  $(".titleTip").children("p").text(listArr[now]);
+          oUlBig.animate({
+             left: -now * imgWidth,
+           },1000);
+	  };
+	  function autoPlay() {
+			timer = setInterval(function() {
+				now++;
+				if(now == aBigLi.length){
+					now = 0;
+				};
+				tab(now);
+			}, 5000);
+	  }
+	  
+});
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
