@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery-2.2.3.min.js"></script>
+	</head>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		#tianqi{
+			text-align: center;
+			line-height: 50px;
+			
+		}
+		
+		h3{
+				text-align: center;
+				line-height: 50px;
+			}
+			.time{
+				text-align: center;
+				
+				line-height: 50px;
+			}
+			#odiv{
+				width:600px;
+				height:500px;
+				border:1px solid #ccc;
+				margin:0 auto;
+				/*position: relative;*/
+			}
+			
+			#odiv ul{
+				width:100px;
+				height:400px;
+				float:left;
+			}
+			#odiv ul li{
+				list-style: none;
+				text-align: center;
+				/*width:100px;
+				height:50px;*/
+				border-bottom:1px solid #ccc;
+				line-height:50px;
+			}
+			#odiv p{
+				width:600px;
+				height:50px;
+				line-height:50px;
+				font-size:20px;
+			}
+	</style>
+	<body>
+		<div id="tianqi">
+			<button id="btn1">获取天气</button>
+		<select name="">
+			<option value="">请选择</option>
+		</select>
+		<select name="">
+			<option value="">请选择</option>
+		</select>
+		<select name="">
+			<option value="">请选择</option>
+		</select>
+		</div>
+		
+		<div class="a">
+		<h3></h3>
+		 <div class="time"></div>
+		
+			<div id="odiv">
+			<!--<p></p>-->
+			<ul class="oul1">
+				<li>日期</li>
+			</ul>
+			<ul class="oul2">
+				<li>风力</li>
+			</ul>
+			<ul class="oul3">
+				<li>风向</li>
+			</ul>
+			<ul class="oul4">
+				<li>高温</li>
+			</ul>
+			<ul class="oul5">
+				<li>低温</li>
+			</ul>
+			<ul class="oul6">
+				<li>天气类型</li>
+			</ul>
+		</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			var DataJson;
+			$.ajax({
+				type:"get",
+				url:"city.json",
+				async:true,
+				dataType:"json",
+				success:function(data){
+					//console.log(data);
+					DataJson = data;
+					$.each(DataJson.p, function(i,j) {
+						//console.log(i);
+						var str="<option>"+j+"</option>";
+						$("select:eq(0)").append(str);
+					});
+				}
+			})
+			
+			$("select:eq(0)").change(function(){
+				$("select:eq(1)").children().remove();//
+				$("select:eq(2)").children().remove();
+				$("select:eq(2)").append('<option>请选择</option>');
+				var $val=$(this).val();
+				$.each(DataJson.p, function(i,j) {
+					//console.log(j);
+					if($val==j){
+						$.each(DataJson.c,function(n,m){
+							//console.log(m);
+							if(j==n){
+								$.each(m, function(k,v) {
+									var str="<option>"+v+"</option>";
+									$("select:eq(1)").append(str);
+								});
+							}
+						});
+					}
+				});
+			})
+			
+			$("select:eq(1)").change(function(){
+				$("select:eq(2)").children().remove();
+				$("selectL:eq(2)").append('<option>请选择</option>');
+				var $val=$("select:eq(0)").val();
+			$.each(DataJson.p, function(i, j) {
+						//console.log(j)
+					if($val == j) {
+						$.each(DataJson.c, function(n, m) {
+						//console.log(n)
+						var $val1 = $("select:eq(1)").val();
+							if(j == n) {
+								$.each(m, function(k, v) {
+									if($val1 == v) {
+										$.each(DataJson.a, function(z, x) {
+											var $val2 = $val + '-' + $val1;
+											if(z == $val2) {
+												$.each(x, function(a, b) {
+//													console.log(a);
+													var str = "<option>" + b + "</option>";
+													$("select:eq(2)").append(str);
+												});
+											}
+										})
+									}
+								});
+							}
+						})
+					}
+				})
+			})
+			
+			
+
+		$("#btn1").click(function(){
+			$('h3').html("");//
+			$('li').html("");//清除
+			var v= $("select:eq(1)").val();
+			//console.log(v);
+			var vv=v.slice(0,2);//截取市
+			//console.log(vv);
+			$.getJSON("http://wthrcdn.etouch.cn/weather_mini?city="+vv,function(val){
+				//console.log(val.data);
+				var data=val.data;
+				//市区
+				shiqu=data.city;
+				//天气
+				DataChannel=data.forecast;
+				//感冒
+				dat=data.ganmao;
+				//console.log(dat);
+				//市区
+				var str=shiqu;
+				$("h3").append(str);
+				//感冒
+				var str=dat;
+				$(".time").append(str);
+				
+				$.each(DataChannel, function(i,j){
+					//console.log(j)		
+					var str = "<li>"+j.date+"</li>";
+						$('.oul1').append(str);
+						var str1 = "<li>"+j.fengli+"</li>";
+						$('.oul2').append(str1);
+						var str2 = "<li>"+j.fengxiang+"</li>";
+						$('.oul3').append(str2);
+						var str3 = "<li>"+j.high+"</li>";
+						$('.oul4').append(str3);
+						var str4 = "<li>"+j.low+"</li>";
+						$('.oul5').append(str4);
+						var str5 = "<li>"+j.type+"</li>";
+						$('.oul6').append(str5);
+				});
+			})
+
+			
+		});
+		
+		});
+
+
+	</script>
+</html>
