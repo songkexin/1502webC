@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>轮播</title>
+		<style>
+			*{
+				padding:0;
+				margin:0;
+			}
+			#banner{
+				width:1000px;
+				height:480px;
+				position: relative;
+				margin:100px auto;
+				overflow: hidden;
+			}
+			#banner .inner{
+				position: absolute;
+				left:0;
+				top:0;
+			}
+			#banner .inner img{
+				float:left;
+			}
+			#banner ul{
+				position: absolute;
+				right:20px;
+				bottom:20px;
+			}
+			#banner ul li{
+				list-style: none;
+				float:left;
+				width:110px;
+				height:70px;
+				margin-left:10px;
+				border:1px solid #fff;
+				/*opacity: 0.3;*/
+			}
+			#banner ul .active{
+				border:1px solid red;
+			}			
+			#banner ul li img{
+				float:left;
+				width:110px;
+				height:70px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="banner">
+			<div class="inner">
+				<img src="images/1.jpg"/>
+				<img src="images/2.jpg"/>
+				<img src="images/3.jpg"/>
+				<img src="images/4.jpg"/>
+				<img src="images/5.jpg"/>
+				<!--<img src="img/01.jpg"/>-->
+			</div>
+			<ul class="oul">
+				<li class="active"><img src="images/1.jpg"/></li>
+				<li><img src="images/2.jpg"/></li>
+				<li><img src="images/3.jpg"/></li>
+				<li><img src="images/4.jpg"/></li>
+				<li><img src="images/5.jpg"/></li>
+			</ul>
+		</div>
+		<script src="../jquery-3.1.1.js"></script>
+		<script>										
+			var oneIndex = 0;//全局变量
+				imgLen = $('.inner img').length;//图片总数
+			function move(){
+				if(oneIndex<imgLen-1){
+					oneIndex++;
+				}
+				else{
+					oneIndex = 0;
+				}
+				changeTo(oneIndex);
+				
+			}
+			var autoChange = setInterval(move,3000);
+			$('oul').find('li').each(function(item){
+				$(this).hover(function(){
+					clearInterval(autoChange);
+					changeTo(item);
+					oneIndex = item;					
+				},function(){
+					autoChangeAgain();
+				})
+			})		
+			
+			
+			//清除定时器时候的重置定时器--封装
+			function autoChangeAgain(){
+				autoChange = setInterval(function(){
+					if(oneIndex<imgLen-1){
+						oneIndex++;
+					}
+					else{
+						oneIndex = 0;
+					}
+					changeTo(oneIndex);
+				},3000);
+			}
+			
+			function changeTo(num){ 
+				$(".inner img").hide();		    
+			    $(".oul").find("li").removeClass("active").eq(num).addClass("active");
+				$(".inner img:eq("+num+")").fadeIn(1000);
+		    }
+			
+		</script>
+	</body>
+</html>

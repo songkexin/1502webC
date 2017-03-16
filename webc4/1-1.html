@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			var num=[1,2,3,5,8,9,7,6,12,14,16,18,19];
+			for(var i=0;i<num.length;i++){
+				for(var j=i+1;j<num.length;j++){
+					if(num[i]==num[j]){
+						num.splice(j,1);
+						j--;
+					}
+				}
+			}
+			//console.log(num);
+			//console.log(num.pop());
+		
+		var ary=[1,2,5,2,5,2,85];
+		 
+//		var ary = [];//字面量定义一个数组
+//		var ary = new Array();//通过构造函数(类)new(实例化)一个数组;
+//		//俩个函数一样
+//		var fn = function (){	
+//		}
+//		var fn = new function(){	
+//		}
+		
+		</script>
+	</body>
+</html>

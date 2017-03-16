@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery-2.2.3.min.js" "></script>
+	</head>
+	<style>
+			*{
+				padding:0;
+				margin:0;
+			}
+			h3{
+				text-align: center;
+				line-height: 50px;
+			}
+			.time{
+				text-align: center;
+				height: 20px;
+			}
+			#odiv{
+				width:600px;
+				height:500px;
+				border:1px solid #ccc;
+				margin:0 auto;
+				/*position: relative;*/
+			}
+			
+			#odiv ul{
+				width:100px;
+				height:400px;
+				float:left;
+			}
+			#odiv ul li{
+				list-style: none;
+				text-align: center;
+				/*width:100px;
+				height:50px;*/
+				border-bottom:1px solid #ccc;
+				line-height:50px;
+			}
+			#odiv p{
+				width:600px;
+				height:50px;
+				line-height:50px;
+				font-size:20px;
+			}
+		</style>
+	<body>
+		<h3></h3>
+		 <div class="time"></div>
+		
+			<div id="odiv">
+			<!--<p></p>-->
+			<ul class="oul1">
+				<li>日期</li>
+			</ul>
+			<ul class="oul2">
+				<li>风力</li>
+			</ul>
+			<ul class="oul3">
+				<li>风向</li>
+			</ul>
+			<ul class="oul4">
+				<li>高温</li>
+			</ul>
+			<ul class="oul5">
+				<li>低温</li>
+			</ul>
+			<ul class="oul6">
+				<li>天气类型</li>
+			</ul>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var DataChannel;
+		$.ajax({
+			url:"http://wthrcdn.etouch.cn/weather_mini?city=%E5%8C%97%E4%BA%AC",
+			type:"get",
+			async:true,
+			dataType:"jsonp",//跨域加p
+			data:"",
+			success:function(data){
+				//市区
+				shiqu=data.data.city;
+				//天气
+				DataChannel=data.data.forecast;
+				//感冒
+				dat=data.data.ganmao;
+				//console.log(shiqu);
+				var str="<h2>"+shiqu+"</h2>";
+				$("h3").append(str);
+				var str="<h3>"+dat+"</h3>";
+				$(".time").append(str);
+				$.each(DataChannel, function(i,j){
+					//console.log(j)		
+					var str = "<li>"+j.date+"</li>";
+						$('.oul1').append(str);
+						var str1 = "<li>"+j.fengli+"</li>";
+						$('.oul2').append(str1);
+						var str2 = "<li>"+j.fengxiang+"</li>";
+						$('.oul3').append(str2);
+						var str3 = "<li>"+j.high+"</li>";
+						$('.oul4').append(str3);
+						var str4 = "<li>"+j.low+"</li>";
+						$('.oul5').append(str4);
+						var str5 = "<li>"+j.type+"</li>";
+						$('.oul6').append(str5);
+				});
+			}	
+		})
+	</script>
+</html>

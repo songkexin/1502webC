@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计时器</title>
+		<style>
+			*{
+				padding:0;
+				margin:0;
+			}
+			ul{
+				height:50px;				
+			}
+			li{
+				list-style: none;
+				float:left;
+				margin-left:8px;
+				margin-top:15px;				
+			}
+			#odiv{
+				width:300px;
+				height:200px;
+				margin:200px auto;
+				/*border:1px solid #ccc;*/
+				background:#ccc;
+			}
+			.time{
+				width:300px;
+				height:150px;
+				line-height:100px;
+				font-size:30px;
+				text-align: center;
+			}
+			.time input[type='text']{
+				width:40px;
+				height:35px;
+				border:none;
+				background:#ccc;
+				text-align: center;
+				line-height:35px;
+				font-size:30px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="odiv">
+			<ul>
+				<li>SUN</li>
+				<li>MON</li>
+				<li>TUE</li>
+				<li>WED</li>
+				<li>THU</li>
+				<li>FRI</li>
+				<li>SAT</li>				
+			</ul>
+			<div class="time">
+				<input type="text" id="txt_h"/>:
+				<input type="text" id="txt_m"/>:
+				<input type="text" id="txt_s"/>
+			</div>
+		</div>
+		<script src="jquery.js"></script>
+		<script>
+			$(function(){
+				 timer();
+			})
+			function timer(){
+				var date = new Date();
+				//console.log(date);
+				var weekTime = '日一二三四五六';
+				var mywek = date.getDay();
+				var week = weekTime.charAt(mywek); //获取星期
+//				console.log(week);
+				var hour = date.getHours(); // 获取小时；
+				var min = date.getMinutes(); //获取分钟
+				var sec = date.getSeconds(); //获取秒
+				//console.log(min);
+//				return fn(hour)+':'+fn(min)+':'+fn(sec);
+				if(hour<10){
+					hour = "0"+hour;
+				}
+				if(min<10){
+					min = "0"+min;
+				}
+				if(sec<10){
+					sec = "0"+sec;
+				}
+				$('#txt_h').val(hour);
+				$('#txt_m').val(min);
+				$('#txt_s').val(sec);
+				setTimeout(timer,1000);
+				
+			}
+			//判断是否大于10  小于10时 前面补个0；
+			function fn(n){
+				return n = n<10?'0'+n:n;
+			}
+			
+			$(function(){	
+				
+				
+				setTimeout(function(){
+					$('.time').append(timer).replaceAll(timer);
+				},1000);
+				
+				
+			})
+			
+		</script>
+	</body>
+</html>

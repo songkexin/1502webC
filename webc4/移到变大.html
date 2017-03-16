@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<title></title>
+	<style type="text/css"> 
+img{ height:262px; width:400px; position:absolute; border:5px solid #FFF;} 
+#imgtest{ height:auto;width:840px; margin:0 auto; position:absolute; 
+} 
+#imgtest ul{ position:relative;width:840px; height:auto; background:#00F;} 
+#imgtest ul li{ position:relative; height:276px; width:410px; list-style:none; float:left; margin:3px; border:1px solid #999;} 
+</style> 
+</head>
+<body>
+	<script  src="jquery-2.2.3.min.js"></script> 
+<script> 
+$(function(){ 
+var offsetX=20-$("#imgtest").offset().left; 
+var offsetY=20-$("#imgtest").offset().top; 
+var size=1.2*$('#imgtest ul li img').width(); 
+$("#imgtest ul li").mouseover(function(event) { 
+var $target=$(event.target); 
+if($target.is('img')) 
+{ 
+$("<img id='tip' src='"+$target.prop("src")+"'>").css({ 
+"height":size, 
+"width":size, 
+"top":event.pageX+offsetX, 
+"left":event.pageY+offsetY, 
+}).appendTo($("#imgtest")); 
+} 
+}).mouseout(function() { 
+$("#tip").remove(); 
+}).mousemove(function(event) { 
+$("#tip").css( 
+{ 
+"left":event.pageX+offsetX, 
+"top":event.pageY+offsetY 
+}); 
+}); 
+}) 
+</script> 
+
+</head> 
+<body> 
+<div id="imgtest"> 
+<ul> 
+<li><img src="JQ版轮播/images/1.jpg" /></li> 
+</ul> 
+</div> 
+</body>
+</html>

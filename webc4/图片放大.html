@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>图片放大</title>
+    <style>
+        #odiv{
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+        #odiv .a{
+            width: 100%;
+            height: 100%;
+        }
+        #odiv .a img{
+            width: 100%;
+            height: 100%;
+        }
+        #adiv{
+            width: 300px;
+            height: 300px;
+            margin-left: 50px;
+            float: left;
+            display: none;
+        }
+        #adiv .b{
+            width: 100%;
+            height: 100%;
+        }
+        #adiv .b img{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div id="odiv">
+    <div class="a">
+        <img src="JQ版轮播/images/1.jpg" alt=""/>
+    </div>
+    <button id="btn1">放大</button>
+</div>
+<div id="adiv">
+    <div class="b">
+        <img src="JQ版轮播/images/1.jpg" alt=""/>
+    </div>
+    <button id="btn2">缩小</button>
+</div>
+</body>
+
+<script src="jquery-2.2.3.min.js"></script>
+<script>
+    $("#btn1").click(function(){
+        $("#adiv").show();
+    });
+    $("#btn2").click(function(){
+        $("#adiv").hide();
+    });
+</script>
+
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="jquery-3.1.1.js"></script>
+	</head>
+
+	<body>
+		<select id='provice'>
+			<option>请选择</option>
+		</select>
+		<select id='city'>
+			<option>请选择</option>
+		</select>
+		<select id='town'>
+			<option>请选择</option>
+		</select>
+	</body>
+	<script>
+		$(function() {
+			var DataJson;
+			$.ajax({
+				type: "get",
+				//url: "http://www.luckykai.com/json/index.php?text=city",
+				
+				url:"city.json",
+				async: true,
+				dataType: "json",
+				success: function(data) {
+					//console.log(data);
+					DataJson = data;
+					$.each(DataJson.p, function(i, j) {
+//						console.log(i)
+						var str = "<option>" + j + "</option>";
+						$("select:eq(0)").append(str);
+					});
+				}
+			})
+
+			$("select:eq(0)").change(function() {
+				
+				$("select:eq(1)").children().remove();//移除子节点
+				$("#town").children().remove();
+				$("#town").append('<option> 请选择 </option>');
+				var $val = $(this).val();
+				$.each(DataJson.p, function(i, j) {
+					//					console.log(j)
+					if($val == j) {
+						$.each(DataJson.c, function(n, m) {
+									//console.log(m)
+							if(j == n) {
+								$.each(m, function(k, v) {
+									var str = "<option>" + v + "</option>";
+									$("select:eq(1)").append(str);
+								});
+							}
+						})
+					}
+				})
+			})
+			$("select:eq(1)").change(function() {
+				
+				$("#town").children().remove();
+				$("#town").append('<option> 请选择 </option>');
+				var $val = $("select:eq(0)").val();
+				$.each(DataJson.p, function(i, j) {
+					//	console.log(j)
+					if($val == j) {
+						$.each(DataJson.c, function(n, m) {
+						//console.log(n)
+						var $val1 = $("select:eq(1)").val();
+							if(j == n) {
+								$.each(m, function(k, v) {
+									if($val1 == v) {
+										$.each(DataJson.a, function(z, x) {
+											var $val2 = $val + '-' + $val1;
+											if(z == $val2) {
+												$.each(x, function(a, b) {
+//													console.log(a);
+													var str = "<option>" + b + "</option>";
+													$("select:eq(2)").append(str);
+												});
+											}
+										})
+									}
+								});
+							}
+						})
+					}
+				})
+			})
+		});
+	</script>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>计时器</title>
+		<script src="jquery-2.2.3.min.js"></script>
+		<style type="text/css">
+			#box{
+				width: 180px;
+				height: 60px;
+				background: darkblue;
+				border: 20px solid #3498DB;
+				line-height: 60px;
+				text-align: ccenter;
+				font-size: 30px;
+				position: relative;
+			}
+			#box #sp1{
+				position: absolute;
+				left: 8px;
+				top: -20px;
+				font-size: 8px;
+				}
+				 #box #sp2{
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            font-size: 8px;
+        }
+		</style>
+	</head>
+	<body>
+		<div id="box">
+			<span id="sp1"></span>
+			<span id="sp2"></span>
+			<span id="sp3"></span>												
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			//定时器
+			setInterval(function(){
+				var data=new Date();
+				var second=data.getSeconds();//秒
+				var minute=data.getMinutes();//分
+				var hover=data.getHours();//时
+				var week=data.getDay();//日
+				
+				function getTimer(){
+					return str=zero(sj(hover))+':'+zero(minute)+':'+zero(second);
+				}
+				//判断为10就变0
+				function zero(n){
+					return n=n<10?'0'+n:n;
+				}
+				//判断年
+				function sj (m){
+					return m=m<12?m:m-12;
+				}
+				//判断星期
+				function hov(){
+					return hr=hover<=12?"AM":"PM";
+				}
+			function xinqi(){
+            switch(week){
+                case 1:
+                    x="MON";
+                    break;
+                case 2:
+                    x="TUE";
+                    break;
+                case 3:
+                    x="WED";
+                    break;
+                case 4:
+                    x="THURS";
+                    break;
+                case 5:
+                    x="FRI";
+                    break;
+                case 6:
+                    x="SAT";
+                    break;
+                case 0:
+                    x="SUN";
+                    break;
+            }
+            return x;
+           }
+			 $("#sp1").html(xinqi());
+             $("#sp2").html(hov());
+             $("#sp3").html(getTimer());
+			
+			},1000);$
+		})
+	</script>
+</html>

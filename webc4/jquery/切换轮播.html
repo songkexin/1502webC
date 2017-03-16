@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>轮播</title>
+		<style>
+			*{
+				padding:0;
+				margin:0;
+			}
+			#banner{
+				width:640px;
+				height:480px;
+				position: relative;
+				margin:100px auto;
+			}
+			.one{
+				width:640px;
+				height:480px;
+				font-size:40px;
+				color:#000;
+				background:red;
+				text-align: center;
+				line-height:480px;
+			}
+			.two{
+				width:640px;
+				height:480px;
+				font-size:40px;
+				color:#000;
+				background:blue;
+				text-align: center;
+				line-height:480px;
+			}
+			.three{
+				width:640px;
+				height:480px;
+				font-size:40px;
+				color:#000;
+				background:green;
+				text-align: center;
+				line-height:480px;
+			}
+			.four{
+				width:640px;
+				height:480px;
+				font-size:40px;
+				color:#000;
+				background:blueviolet;
+				text-align: center;
+				line-height:480px;
+			}
+			.five{
+				width:640px;
+				height:480px;
+				font-size:40px;
+				color:#000;
+				background:cyan;
+				text-align: center;
+				line-height:480px;
+			}
+			#banner .inner{
+				position: absolute;
+				left:0;
+				top:0;
+			}
+			#banner ul{
+				position: absolute;
+				left:0;
+				top:-50px;
+				/*border-top:5px solid #ccc;*/
+			}
+			#banner ul li{
+				list-style: none;
+				width:128px;
+				height:50px;
+				background:#ccc;
+				float:left;
+				text-align: center;
+				line-height:50px;
+				cursor: pointer;
+			}
+			#banner ul .active{
+				background:yellow;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="banner">
+			<div class="inner">
+				<div class="one">1</div>
+				<div class="two">2</div>
+				<div class="three">3</div>
+				<div class="four">4</div>
+				<div class="five">5</div>
+			</div>
+			<ul class="oul">
+				<li class="active">1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>
+		</div>
+		<script src="jquery-2.2.3.min.js"></script>
+		<script>
+			$(function(){
+				var oneIndex = 0;
+				$('.inner div').hide().eq(0).show();
+				function autoChange(){
+					$('.inner div').hide().eq(oneIndex).fadeIn();
+					$('.oul li').eq(oneIndex).addClass('active').siblings().removeClass('active');
+				}
+				//实现轮播效果
+				function move(){
+					oneIndex++;
+					if(oneIndex == 5){
+						oneIndex = 0;
+					}
+					autoChange();
+				}
+				var timer = setInterval(move,2000);
+				//实现鼠标移上暂停
+				$('#banner').mouseover(function(){
+					clearInterval(timer);
+				})
+				$('#banner').mouseout(function(){
+					timer = setInterval(move,2000);
+				})
+				//实现tab切换
+				$('.oul li').click(function(){
+					oneIndex = $(this).index();
+					autoChange();
+				})
+			})
+		</script>
+	</body>
+</html>
